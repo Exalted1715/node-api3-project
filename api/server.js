@@ -1,10 +1,11 @@
 const express = require('express');
 const {logger } = require('./middleware/middleware')
 const server = express();
+const usersRouter = require('./users/users-router')
 
 
 server.use(express.json())
-
+server.use('/api/users', usersRouter)
 server.use(logger)
 
 // global middlewares and the user's router need to be connected here
