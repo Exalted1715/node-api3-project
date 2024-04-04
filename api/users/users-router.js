@@ -16,22 +16,23 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   User.get()
-  .then(users =>{
+  .then(users => {
     res.json(users)
   })
   .catch(next)
 });
 
 router.get('/:id',validateUserId, (req, res) => {
-  // RETURN THE USER OBJECT
-  // this needs a middleware to verify user id
-    console.log(req.user)
+res.json(req.user) 
 });
 
-router.post('/',validateUser, validatePost, (req, res) => {
-  // RETURN THE NEWLY CREATED USER OBJECT
-  // this needs a middleware to check that the request body is valid
-  console.log(req.user)
+router.post('/', validateUser,  (req, res, next) => {
+  
+  User.insert({name: req.name})
+  .then(newUser =>{
+    res.status(201).json(newUser)
+  })
+  .catch(next)
 });
 
 router.put('/:id',validateUserId,validateUser, (req, res) => {
